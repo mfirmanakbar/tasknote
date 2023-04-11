@@ -1,24 +1,33 @@
-export const ShowTask = ({tasks, setTasks}) => {
+export const ShowTask = ({taskList, setTaskList, task, setTask}) => {
    
+    // const handleEdit = () => {
+    //     console.log("object");
+    // }
+
+    // const handleDelete = () => {
+    //     const updatedTaskList = taskList.filter(todo => todo.id != task.id);
+    //     setTaskList(updatedTaskList);
+    // }
+
   return (
     <section className="showTask">
         <div className="head">
             <div>
                 <span className="title">Todo</span>
-                <span className="count">{tasks.length}</span>
+                <span className="count">{taskList.length}</span>
             </div>
-            <button className="clearAll" onClick={() => setTasks([])}>Clear All</button>
+            <button className="clearAll" onClick={() => setTaskList([])}>Clear All</button>
         </div>
         <ul>
             {
-                tasks.map((task) => (
+                taskList.map((task) => (
                     <li key={task.id}>
                         <p>
                             <span className="name">{task.name}</span>
                             <span className="time">{task.time}</span>
                         </p>
-                        <i className="bi bi-pencil-square"></i>
-                        <i className="bi bi-trash"></i>
+                        <i onClick={handleEdit(task.id)} className="bi bi-pencil-square"></i>
+                        <i onClick={handleDelete(task.id)} className="bi bi-trash"></i>
                     </li>
                 ))
             }

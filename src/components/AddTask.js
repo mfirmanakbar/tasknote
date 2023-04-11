@@ -1,4 +1,4 @@
-export const AddTask = ({tasks, setTasks}) => {
+export const AddTask = ({taskList, setTaskList, task, setTask}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault(); // to prevent the reload page after submit button clicked
@@ -8,7 +8,7 @@ export const AddTask = ({tasks, setTasks}) => {
             name: e.target.task.value, 
             time: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
         }
-        setTasks([...tasks, newTask])
+        setTaskList([...taskList, newTask])
         e.target.task.value = "";
     }
 
