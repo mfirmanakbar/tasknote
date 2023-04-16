@@ -1,23 +1,39 @@
-export const AddTask = ({taskList, setTaskList, task, setTask}) => {
+export const AddTask = ({ taskList, setTaskList, task, setTask }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault(); // to prevent the reload page after submit button clicked
-        const date = new Date();
-        const newTask = {
-            id: date.getTime(), 
-            name: e.target.task.value, 
-            time: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
+
+        if (task.id) {
+            const date = new Date();
+            const updatedTasklist = taskList.map((todo) => (
+                todo.id === task.id ? { id: task.id, name: task.name, time: `${date.toLocaleTimeString()} ${date.toLocaleDateString()}` } : todo
+            ));
+            setTaskList(updatedTasklist);
+            //e.target.task.value = "";
+            setTask({});
+        } else {
+            const date = new Date();
+            const newTask = {
+                id: date.getTime(),
+                name: e.target.task.value,
+                time: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
+            }
+            setTaskList([...taskList, newTask])
+            //e.target.task.value = "";
+            setTask({});
         }
-        setTaskList([...taskList, newTask])
-        e.target.task.value = "";
+
     }
 
-  return (
-    <section className="addTask">
-        <form onSubmit={handleSubmit}>
-            <input type="text" name="task" autoComplete="off" placeholder="add task" maxLength="25"/>
-            <button type="submit">Add</button>
-        </form>
-    </section>
-  )
+    return (
+        <section className="addTask">
+            <form onSubmit={handleSubmit}>
+                <input type="text" name="task"
+                    value={task.name || ""}
+                    onChange={e => setTask({ ...task, name: e.target.value })}
+                    autoComplete="off" placeholder="add task" maxLength="25" />
+                <button type="submit">Add</button>
+            </form>
+        </section>
+    )
 }
