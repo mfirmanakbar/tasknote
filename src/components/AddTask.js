@@ -5,8 +5,13 @@ export const AddTask = ({ taskList, setTaskList, task, setTask }) => {
 
         if (task.id) {
             const date = new Date();
+            const updateData = { 
+                id: task.id, 
+                name: task.name, 
+                time: `${date.toLocaleTimeString()} ${date.toLocaleDateString()}` 
+            };
             const updatedTasklist = taskList.map((todo) => (
-                todo.id === task.id ? { id: task.id, name: task.name, time: `${date.toLocaleTimeString()} ${date.toLocaleDateString()}` } : todo
+                todo.id === task.id ? updateData : todo
             ));
             setTaskList(updatedTasklist);
             //e.target.task.value = "";
@@ -32,7 +37,7 @@ export const AddTask = ({ taskList, setTaskList, task, setTask }) => {
                     value={task.name || ""}
                     onChange={e => setTask({ ...task, name: e.target.value })}
                     autoComplete="off" placeholder="add task" maxLength="25" />
-                <button type="submit">Add</button>
+                <button type="submit">{ task.id ? "Update" : "Add" }</button>
             </form>
         </section>
     )
